@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% load static %}
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="friendbook">
+        <meta name="keywords" content="friendbook">
+        <meta name="author" content="friendbook">
+        <link rel="icon" href="{% static '/assets/images/skimi.png' %}" type="image/x-icon" />
+        <title>Skimi</title>
+    
+        <!--Google font-->
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&amp;display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&amp;display=swap"
+            rel="stylesheet">
+    
+        <!-- Theme css -->
+        <link id="change-link" rel="stylesheet" type="text/css" href="{% static '/assets/css/style.css' %}">
+    
+    </head>
+    
+<body>
+     <!-- login section start -->
+     <section class="login-section">
+        <div class="header-section">
+            <div class="logo-sec">
+                <a href="index.html">
+                    <img src="{% static '/assets/images/skimi.png' %}" alt="logo" class="img-fluid blur-up lazyload" height="50px" width="100px">
+                </a>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-6 col-lg-5 d-none d-lg-block">
+                    <div class="login-welcome">
+                        <div>
+                            <img src="{% static '/assets/images/skimiS.png' %}" class="img-fluid blur-up lazyload"
+                                alt="charcter" width="200px" height="200px">
+                            <!-- <h1>Welcome Back!</h1> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-7 col-md-10 col-12 m-auto">
+                    <div class="login-form">
+                        <div>
+                            <div class="login-title">
+                                <h2>Login</h2>
+                            </div>
+                            <div class="login-discription">
+                                <h3>Hello Everyone, Welcome Back</h3>
+                                <h4>Welcome to Skimi, please login to your account.
+                                </h4>
+                            </div>
+                            <div class="form-sec">
+                                <div>
+                                    <form class="theme-form" method="post" action="{% url 'login' %}">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <label for="id_username">Username</label>
+                                            <input type="text" class="form-control" id="id_username" name="username" placeholder="Enter username" required>
+                                            <i class="input-icon iw-20 ih-20" data-feather="user"></i>
+                                            <p class="error-message">{{ form.username.errors }}</p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="id_password">Password</label>
+                                            <input type="password" class="form-control" id="id_password" name="password" placeholder="Password" required>
+                                            <i class="input-icon iw-20 ih-20" data-feather="eye"></i>
+                                            <p class="error-message">{{ form.password.errors }}</p>
+                                        </div>
+                                        <div class="bottom-sec">
+                                            <div class="form-check checkbox_animated">
+                                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                                <label class="form-check-label" for="exampleCheck1">remember me</label>
+                                            </div>
+                                            <a href="{% url 'password_reset' %}" class="ms-auto forget-password">forget password?</a>
+                                        </div>
+                                        <div class="btn-section">
+                                            <button type="submit" class="btn btn-solid btn-lg">login</button>
+                                            <a href="{% url 'register' %}" class="btn btn-solid btn-lg ms-auto">sign up</a>
+                                        </div>
+                                    </form>
+                                    
+                                    
+                                    <div class="connect-with">
+                                        <h6><span>OR Connect With</span></h6>
+                                        <div class="or-container">
+                                            <div class="line-separator"></div>
+                                            <div class="or-label">or</div>
+                                            <div class="line-separator"></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12"> 
+                                                <a class="btn btn-lg btn-google btn-block btn-outline" href="#">
+                                                    <img src="https://img.icons8.com/color/22/000000/google-logo.png"> Sign In with <b>Google</b>
+                                                </a> 
+                                            </div>
+                                        </div> <br>
+                                        <div class="row">
+                                            <div class="col-md-12"> 
+                                                <a class="btn btn-lg btn-google btn-block btn-outline" href="#">
+                                                    <img src="https://img.icons8.com/material-sharp/24/000000/github.png"/> Sign In with <b>Github</b>
+                                                </a> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="how-work">
+            <div class="media">
+                <i data-feather="play-circle"></i>
+                <div class="media-body">
+                    <h2>how it work?</h2>
+                    <p>
+                        Skimi is an app which allows users, who sign-up for free profiles, to connect with
+                        friends, work colleagues or people they don't know, online.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- login section end -->
+
+    <!-- <div class="m-auto col-md-8">
+        <div class="content-section">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">Login</legend>
+                    {{form}}
+                </fieldset>
+                <div class="form-group">
+                    <button class="btn btn-outline-info" type="submit">Login</button>
+                    <small class="text-muted ml-2">
+                        <a href="{% url 'password_reset' %}">Forgot Password?</a>
+                    </small>
+                </div>
+            </form>
+            <div class="or-container">
+                <div class="line-separator"></div>
+                <div class="or-label">or</div>
+                <div class="line-separator"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-12"> 
+                    <a class="btn btn-lg btn-google btn-block btn-outline" href="#">
+                        <img src="https://img.icons8.com/color/22/000000/google-logo.png"> Sign In with <b>Google</b>
+                    </a> 
+                </div>
+            </div> <br>
+            <div class="row">
+                <div class="col-md-12"> 
+                    <a class="btn btn-lg btn-google btn-block btn-outline" href="#">
+                        <img src="https://img.icons8.com/material-sharp/24/000000/github.png"/> Sign In with <b>Github</b>
+                    </a> 
+                </div>
+            </div> <br>
+            <div class="border-top pt-3">
+                <small class="text-muted">
+                    Need an Account? <a class="ml-2" href="{% url 'register' %}">Sign Up Now</a>
+                </small>
+            </div>
+        </div>
+    </div> -->
+
+     <!-- latest jquery-->
+     <script src="{% static '/assets/js/jquery-3.6.0.min.js' %}"></script>
+
+     <!-- popper js-->
+     <script src="{% static '/assets/js/popper.min.js' %}"></script>
+ 
+     <!-- slick slider js -->
+     <script src="{% static '/assets/js/slick.js' %}"></script>
+     <script src="{% static '/assets/js/custom-slick.js' %}"></script>
+ 
+     <!-- feather icon js-->
+     <script src="{% static '/assets/js/feather.min.js' %}"></script>
+ 
+     <!-- emoji picker js-->
+     <script src="{% static '/assets/js/emojionearea.min.js' %}"></script>
+ 
+     <!-- Bootstrap js-->
+     <script src="{% static '/assets/js/bootstrap.js' %}"></script>
+ 
+     <!-- chatbox js -->
+     <script src="{% static '/assets/js/chatbox.js' %}"></script>
+ 
+     <!-- lazyload js-->
+     <script src="{% static '/assets/js/lazysizes.min.js' %}"></script>
+ 
+     <!-- theme setting js-->
+     <script src="{% static '/assets/js/theme-setting.js' %}"></script>
+ 
+     <!-- Theme js-->
+     <script src="{% static '/assets/js/script.js' %}"></script>
+ 
+     <script>
+         feather.replace();
+         $(".emojiPicker ").emojioneArea({
+             inline: true,
+             placement: 'absleft',
+             pickerPosition: "top left ",
+         });
+     </script>
+ 
+</body>
+</html>

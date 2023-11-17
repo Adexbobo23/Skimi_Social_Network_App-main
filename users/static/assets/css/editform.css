@@ -1,0 +1,63 @@
+/* Style for the form container */
+form {
+    padding: 20px; /* Add space around form elements */
+}
+
+/* Style for form field labels */
+form label {
+    font-weight: bold;
+}
+
+/* Style for form input fields */
+form input[type="text"],
+form input[type="email"],
+form input[type="url"],
+form input[type="date"],
+form input[type="number"],
+form input[type="file"],
+form textarea,
+form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Style for form input[type="file"] */
+form input[type="file"] {
+    border: none;
+    background-color: #f5f5f5;
+}
+
+/* Style for form input[type="file"] label (custom file input button) */
+form input[type="file"] + label {
+    background-color: #007BFF; /* Button background color */
+    color: #fff; /* Button text color */
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+    text-align: center;
+}
+
+/* Style for form input[type="file"] label:hover (hover effect for custom file input button) */
+form input[type="file"] + label:hover {
+    background-color: #0056b3; /* Hover background color */
+}
+
+/* Style for form submit button */
+form button[type="submit"] {
+    background-color: #007BFF; /* Button background color */
+    color: #fff; /* Button text color */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Style for form submit button on hover */
+form button[type="submit"]:hover {
+    background-color: #0056b3; /* Hover background color */
+}

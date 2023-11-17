@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="friendbook">
+        <meta name="keywords" content="friendbook">
+        <meta name="author" content="friendbook">
+        <link rel="icon" href="{% static '/assets/images/skimi.png' %}" type="image/x-icon" />
+        <title>Skimi</title>
+    
+        <!--Google font-->
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&amp;display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&amp;display=swap"
+            rel="stylesheet">
+    
+        <!-- Theme css -->
+        <link id="change-link" rel="stylesheet" type="text/css" href="{% static '/assets/css/style.css' %}">
+</head>
+
+<body>
+	{%if user.is_authenticated %}
+    <!-- header start -->
+	<header>
+        <div class="mobile-fix-menu"></div>
+        <div class="container-fluid custom-padding">
+            <div class="header-section">
+                <div class="header-left">
+                    <div class="brand-logo">
+                        <a href="{% url 'blog-home' %}">
+                            <img src="{% static '/assets/images/skimi.png' %}" alt="logo" class="img-fluid blur-up lazyload" width="70px" height="50px">
+                        </a>
+                    </div>
+                    <div class="search-box">
+                        <i data-feather="search" class="icon iw-16 icon-light"></i>
+                        <input type="text" class="form-control search-type" placeholder="find friends...">
+                        <div class="icon-close">
+                            <i data-feather="x" class="iw-16 icon-light"></i>
+                        </div>
+                        <div class="search-suggestion">
+                            <span class="recent">recent search</span>
+                           
+                        </div>
+                    </div>
+                    <ul class="btn-group">
+                        <!-- home -->
+                        <li class="header-btn home-btn">
+                            <a class="main-link" href="{% url 'blog-home' %}">
+                                <i class="icon-light stroke-width-3 iw-16 ih-16" data-feather="home"></i>
+                            </a>
+                        </li>
+                        <!-- add friend -->
+                        <li class="header-btn custom-dropdown dropdown-lg add-friend">
+                            <a class="main-link" href="javascript:void(0)" data-bs-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
+                                <i class="icon-light stroke-width-3 iw-16 ih-16" data-feather="user-plus"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="header-right">
+                    <div class="post-stats">
+                        <ul>
+                            <li>
+                                <a class="mr-2" href="{% url 'user-posts' user %}"><h3>{{user.profile.profile_posts.count}}</h3>
+                                <span>total posts</span></a>
+                            </li>
+                            <li>
+                                <a href="{% url 'friend:list' user.id %}"><h3>{{user.friends.all|length}}</h3>
+                                <span>total friends</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <ul class="option-list">
+                        <!-- message -->
+                        <li class="header-btn custom-dropdown dropdown-lg btn-group message-btn">
+                            <a class="main-link" href="{% url 'room-enroll' %}" aria-haspopup="true"
+                                aria-expanded="false">
+                                <i class="icon-light stroke-width-3 iw-16 ih-16" data-feather="message-circle"></i><span
+                                    class="count success">0</span>
+                            </a>
+                        </li>
+                        <!-- mobile app button -->
+                        <li class="header-btn custom-dropdown d-md-none d-block app-btn">
+                            <a class="main-link" href="javascript:void(0)">
+                                <i class="icon-light stroke-width-3 iw-16 ih-16" data-feather="grid"></i>
+                            </a>
+                            <div class="overlay-bg app-overlay"></div>
+                            <div class="app-box">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="app-icon">
+                                            <a href="{% url 'blog-home' %}">
+                                                <div class="icon">
+                                                    <i data-feather="activity" class="bar-icon"></i>
+                                                </div>
+                                                <h5>Newsfeed</h5>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="app-icon">
+                                            <a href="{% url 'all-save' %}">
+                                                <div class="icon">
+                                                    <i data-feather="bookmark" class="bar-icon"></i>
+                                                </div>
+                                                <h5>Saved Posts</h5>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="app-icon">
+                                            <a href="#">
+                                                <div class="icon">
+                                                    <i data-feather="users" class="bar-icon"></i>
+                                                </div>
+                                                <h5>All Users</h5>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="app-icon">
+                                            <a href="#">
+                                                <div class="icon">
+                                                    <i data-feather="headphones" class="bar-icon"></i>
+                                                </div>
+                                                <h5>music</h5>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="app-icon">
+                                            <a href="{% url 'user-posts' user %}">
+                                                <div class="icon">
+                                                    <i data-feather="edit" class="bar-icon"></i>
+                                                </div>
+                                                <h5>My Post</h5>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="app-icon">
+                                            <a href="{% url 'all-like' %}">
+                                                <div class="icon">
+                                                    <i data-feather="heart" class="bar-icon"></i>
+                                                </div>
+                                                <h5>Liked Posts</h5>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="app-icon">
+                                            <a href="#">
+                                                <i data-feather="video" class="bar-icon"></i>
+                                                <div class="tooltip-cls">
+                                                    <span>Videos</span>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="app-icon">
+                                            <a href="{% url 'logout' %}">
+                                                <i data-feather="log-out" class="bar-icon"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- notification -->
+                        <li class="header-btn custom-dropdown dropdown-lg btn-group notification-btn">
+                            <a class="main-link" href="{% url 'show-notifications' %}" aria-haspopup="true"
+                                aria-expanded="false">
+                                <i class="icon-light stroke-width-3 iw-16 ih-16" data-feather="bell"></i><span
+                                    class="count warning">0</span>
+                            </a>
+                            
+                        </li>
+                        <!-- profile -->
+                        <li class="header-btn custom-dropdown profile-btn btn-group">
+                            <a class="main-link" href="javascript:void(0)" data-bs-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
+                                <i class="icon-light stroke-width-3 d-sm-none d-block iw-16 ih-16"
+                                    data-feather="user"></i>
+                                <div class="media d-none d-sm-flex">
+                                    <div class="user-img">
+                                        <img src="{{ user_profile.image.url }}"
+                                            class="img-fluid blur-up lazyload bg-img" alt="user">
+                                        <span class="available-stats online"></span>
+                                    </div>
+                                    <div class="media-body d-none d-md-block">
+                                        <h4>{{user.username}}</h4>
+                                        <span>active now</span>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <div class="dropdown-header">
+                                    <span>profile</span>
+                                    <div class="mobile-close">
+                                        <h5>close</h5>
+                                    </div>
+                                </div>
+                                <div class="dropdown-content">
+                                    <ul class="friend-list">
+                                        <li>
+                                            <a href="{% url 'profile' %}">
+                                                <div class="media">
+                                                    <i data-feather="user"></i>
+                                                    <div class="media-body">
+                                                        <div>
+                                                            <h5 class="mt-0">Profile</h5>
+                                                            <h6>Profile preview & settings</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{% url 'public-profile' user %}">
+                                                <div class="media">
+                                                    <i data-feather="user"></i>
+                                                    <div class="media-body">
+                                                        <div>
+                                                            <h5 class="mt-0">Public Profile</h5>
+                                                            <h6>Public Profile preview</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{% url 'profile' %}">
+                                                <div class="media">
+                                                    <i data-feather="settings"></i>
+                                                    <div class="media-body">
+                                                        <div>
+                                                            <h5 class="mt-0">setting & privacy</h5>
+                                                            <h6>all settings & privacy</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <div class="media">
+                                                    <i data-feather="help-circle"></i>
+                                                    <div class="media-body">
+                                                        <div>
+                                                            <h5 class="mt-0">help & support</h5>
+                                                            <h6>browse help here</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{% url 'logout' %}">
+                                                <div class="media">
+                                                    <i data-feather="log-out"></i>
+                                                    <div class="media-body">
+                                                        <div>
+                                                            <h5 class="mt-0">log out</h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- header end -->
+
+
+    <!-- page body start -->
+    <div class="page-body container-fluid custom-padding profile-page profile-page-friend">
+
+        <!-- sidebar panel start -->
+        <div class="sidebar-panel">
+            <div class="main-icon">
+                <a href="{% url 'post-create' %}">
+                    <i data-feather="plus" class="bar-icon"></i>
+                </a>
+            </div>
+            <ul class="sidebar-icon">
+                <li>
+                    <a href="{% url 'blog-home' %}">
+                        <i data-feather="activity" class="bar-icon"></i>
+                        <div class="tooltip-cls">
+                            <span>Newsfeed</span>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'all-save' %}">
+                        <i data-feather="bookmark" class="bar-icon"></i>
+                        <div class="tooltip-cls">
+                            <span>Saved Posts</span>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i data-feather="video" class="bar-icon"></i>
+                        <div class="tooltip-cls">
+                            <span>Videos</span>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i data-feather="users" class="bar-icon"></i>
+                        <div class="tooltip-cls">
+                            <span>All Users</span>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i data-feather="headphones" class="bar-icon"></i>
+                        <div class="tooltip-cls">
+                            <span>Music</span>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'user-posts' user %}">
+                        <i data-feather="edit" class="bar-icon"></i>
+                        <div class="tooltip-cls">
+                            <span>My Posts</span>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'all-like' %}">
+                        <i data-feather="heart" class="bar-icon"></i>
+                        <div class="tooltip-cls">
+                            <span>Liked Posts</span>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+            <div class="main-icon">
+                <a href="{% url 'logout' %}">
+                    <i data-feather="log-out" class="bar-icon"></i>
+                </a>
+            </div>
+        </div>
+        <!-- sidebar panel end -->
+
+
+        <div class="page-center">
+
+            <!-- profile cover start -->
+            <div class="profile-cover">
+                {% if user_profile.cover_image %}
+                <img src="{{ user_profile.cover_image.url }}" class="img-fluid blur-up lazyload bg-img" alt="cover">
+                {% else %}
+                    <p>No cover image uploaded yet. Kindly update your profile below</p>
+                {% endif %}
+
+                <div class="profile-box d-lg-block d-none">
+                    <div class="profile-content">
+                        <div class="image-section">
+                            <div class="profile-img">
+                                <div>
+                                    <img src="{{ user_profile.image.url }}" class="img-fluid blur-up lazyload bg-img" alt="profile">
+                                </div>
+                                <span class="stats">
+                                    <img src="{% static 'assets/images/icon/verified.png' %}" class="img-fluid blur-up lazyload" alt="verified">
+                                </span>
+                                
+                            </div>
+                        </div>
+                        <div class="profile-detail">
+                            <h2>{{user.first_name}} {{user.last_name}} <span>❤</span></h2>
+                            <h5>{{ user.email }}</h5>
+                            <div class="counter-stats">
+                                <ul id="counter">
+                                    <li>
+                                        <h3 class="counter-value" data-count="546">{{user.profile.following.count}}</h3>
+                                        <h5>following</h5>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'friend:list' user.id %}"><h3 class="counter-value" data-count="26335">{{user.friends.all|length}}</h3>
+                                        <h5>Friends</h5></a>
+                                    </li>
+                                    <li>
+                                        <h3 class="counter-value" data-count="6845">{{user.following.count}}</h3>
+                                        <h5>followers</h5>
+                                    </li>
+                                </ul>
+                            </div>
+                            <a href="{% url 'blog-home' %}" data-bs-toggle="modal" data-bs-target="#"
+                                class="btn btn-solid">Go to Home</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="setting-dropdown btn-group custom-dropdown arrow-none dropdown-sm">
+                </div>
+            </div>
+            <div class="d-lg-none d-block">
+                <div class="profile-box">
+                    <div class="profile-content">
+                        <div class="image-section">
+                            <div class="profile-img">
+                                <div>
+                                    <img src="{{ user_profile.image.url }}" class="img-fluid blur-up lazyload bg-img" alt="profile">
+                                </div>
+                                <span class="stats">
+                                    <img src="{% static 'assets/images/icon/verified.png' %}" class="img-fluid blur-up lazyload" alt="verified">
+                                </span>
+                                
+                            </div>
+                        </div>
+                        <div class="profile-detail">
+                            <h2>{{user.first_name}} {{user.last_name}} <span>❤</span></h2>
+                            <h5>{{ user.email }}</h5>
+                            <div class="counter-stats">
+                                <ul>
+                                    <li>
+                                        <h3 class="counter-value" data-count="546">{{user.profile.following.count}}</h3>
+                                        <h5>following</h5>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'friend:list' user.id %}"><h3 class="counter-value" data-count="26335">{{user.friends.all|length}}</h3>
+                                        <h5>Friends</h5></a>
+                                    </li>
+                                    <li>
+                                        <h3 class="counter-value" data-count="6845">{{user.following.count}}</h3>
+                                        <h5>followers</h5>
+                                    </li>
+                                </ul>
+                            </div>
+                            <a href="{% url 'blog-home' %}" data-bs-toggle="modal" data-bs-target="#editProfile"
+                                class="btn btn-solid">Go to Home</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- profile cover end -->
+
+            <!-- profile menu start -->
+            <div class="profile-menu section-t-space">
+                <ul>
+                    <li>
+                        <a href="{% url 'profile' %}">
+                            <i class="iw-14 ih-14" data-feather="clock"></i>
+                            <h6>timeline</h6>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="">
+                            <i class="iw-14 ih-14" data-feather="info"></i>
+                            <h6>about</h6>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'friend:list' user.id %}">
+                            <i class="iw-14 ih-14" data-feather="users"></i>
+                            <h6>friends</h6>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <i class="iw-14 ih-14" data-feather="image"></i>
+                            <h6>photos</h6>
+                        </a>
+                    </li>
+                    <li class="d-xl-none d-inline-block">
+                        <a href="">
+                            <i class="iw-14 ih-14" data-feather="list"></i>
+                            <h6>acitivity feed</h6>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="right-menu d-xl-flex d-none">
+                    <li>
+                        <div class="search-bar input-style icon-left search-inmenu">
+                            <i class="iw-16 ih-16 icon icon-theme" data-feather="search"></i>
+                            <input type="text" class="form-control" placeholder="search here...">
+                        </div>
+                    </li>
+                    <li>
+                        <a href="">
+                            <i class="iw-14 ih-14" data-feather="list"></i>
+                            <h6>acitivity feed</h6>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- profile menu end -->
+
+            <div class="container-fluid section-t-space px-0">
+                <div class="page-content">
+
+                    <div class="content-center w-100">
+                        <!-- friend list -->
+                        <div class="friend-list-box section-b-space">
+                            <div class="card-title">
+                                <h3>friends</h3>
+                                <div class="right-setting">
+                                    <div class="search-input input-style icon-right">
+                                        <i data-feather="search" class="icon-dark icon iw-16"></i>
+                                        <input type="text" class="form-control" placeholder="find friends...">
+                                    </div>
+                                    <div class="ms-2 setting-dropdown">
+                                        <div class="btn-group custom-dropdown arrow-none dropdown-sm">
+                                            <a href="#" data-bs-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">
+                                                filter
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right custom-dropdown">
+                                                <ul>
+                                                    <li class="active">
+                                                        <a href="#">all friends</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#">close friends</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#">office friends</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container-fluid">
+								{% if friends %}
+							<div class="friend-list friend-page-list">								
+									<ul>
+										{% for friend in friends %}
+										<li>
+											<div class="profile-box friend-box">
+												<div class="profile-content">
+													<div class="image-section">
+														<div class="profile-img">
+															<div>
+																<img src="{{friend.0.profile.image.url}}" class="img-fluid blur-up lazyload bg-img" alt="profile">
+															</div>
+															<span class="stats">
+																<img src="{% static '/assets/images/icon/verified.png' %}" class="img-fluid blur-up lazyload" alt="verified">
+															</span>
+														</div>
+													</div>
+													<div class="profile-detail">
+														<a class="mr-2 h4" href="{% url 'profile-detail-view' pk=friend.0.pk %}"><h2>{{friend.0.username|truncatechars:50}} <span>❤</span></h2></a>
+														<h5>{{ friend.0.email }}</h5>
+														<!-- Customize this section -->
+														<div class="counter-stats">
+															<!-- <ul>
+																<li>
+																	<h3 class="counter-value">546</h3>
+																	<h5>following</h5>
+																</li>
+																<li>
+																	<h3 class="counter-value">26335</h3>
+																	<h5>likes</h5>
+																</li>
+																<li>
+																	<h3 class="counter-value">6845</h3>
+																	<h5>followers</h5>
+																</li>
+															</ul> -->
+														</div>
+														<a href="{% url 'profile-detail-view' pk=friend.0.pk %}" class="btn btn-outline">View Profile</a>
+														{% if friend.1 %}
+														<a href="{% url 'room-choice' friend.0.id %}" class="btn btn-outline">Send a Message</a>
+														{% endif %}
+													</div>
+												</div>
+											</div>
+										</li>
+										{% endfor %}
+									</ul>								
+							</div>
+							{% else %} <!-- If no friends -->
+								<div class="d-flex flex-row flex-grow-1 justify-content-center align-items-center p-4">
+									<p>You are not friends with anyone.</p>
+								</div>
+							{% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- conversation panel start -->
+        <div class="conversation-panel xl-light">
+            <div class="panel-header">
+                <h2>friends</h2>
+                <h5>start new conversation</h5>
+                <div class="setting">
+                    <div class="setting-btn setting-dropdown">
+                        <!-- ... -->
+                    </div>
+                </div>
+            </div>
+            <div class="search-bar">
+                <!-- ... -->
+            </div>
+            <div class="friend-section">
+                <!-- <div class="header-section">
+                    <a data-bs-toggle="collapse" href="#accordion" role="button" aria-expanded="true" class="">
+                        close friends
+                        <div class="down-arrow">
+                            <i data-feather="chevron-down" class="icon-theme iw-14 ih-14"></i>
+                        </div>
+                    </a>
+                </div> -->
+                <div id="accordion" class="friend-list collapse show">
+                    <ul>
+                        {% for user in random_users %}
+                        <li class="friend-box user{{ forloop.counter }}">
+                            <div class="media">
+                                <div class="user-img">
+                                    <img src="{{ user.profile.image.url }}" class="img-fluid blur-up lazyload bg-img" alt="user">
+                                    <!-- Update the source of the image using user's profile image -->
+                                    <span class="available-stats"></span>
+                                </div>
+                                <div class="media-body">
+                                    <h5 class="user-name">{{ user.username }}</h5>
+                                    <h6>{% if user.profile.location %}{{ user.profile.location }}{% endif %}</h6>
+                                    <!-- Display user's location if available -->
+                                </div>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- conversation panel end -->
+
+    </div>
+    <!-- page body end -->
+
+
+    <!-- latest jquery-->
+    <script src="{% static '/assets/js/jquery-3.6.0.min.js' %}"></script>
+
+    <!-- popper js-->
+    <script src="{% static '/assets/js/popper.min.js' %}"></script>
+
+    <!-- slick slider js -->
+    <script src="{% static '/assets/js/slick.js' %}"></script>
+    <script src="{% static '/assets/js/custom-slick.js' %}"></script>
+
+    <!-- feather icon js-->
+    <script src="{% static '/assets/js/feather.min.js' %}"></script>
+
+    <!-- emoji picker js-->
+    <script src="{% static '/assets/js/emojionearea.min.js' %}"></script>
+
+    <!-- Bootstrap js-->
+    <script src="{% static '/assets/js/bootstrap.js' %}"></script>
+
+    <!-- chatbox js -->
+    <script src="{% static '/assets/js/chatbox.js' %}"></script>
+
+    <!-- lazyload js-->
+    <script src="{% static '/assets/js/lazysizes.min.js' %}"></script>
+
+    <!-- theme setting js-->
+    <script src="{% static '/assets/js/theme-setting.js' %}"></script>
+
+    <!-- Theme js-->
+    <script src="{% static '/assets/js/script.js' %}"></script>
+
+    <script>
+        feather.replace();
+        $(".emojiPicker ").emojioneArea({
+            inline: true,
+            placement: 'absleft',
+            pickerPosition: "top left ",
+        });
+    </script>
+
+    {% endif %}
+</body>
+
+</html>
+
+<!-- <div class="col-md-8 m-auto">
+
+{% if friends %}
+	<div class="content-section">
+		{% for friend in friends %}
+			<div class="media mb-3">
+				<img class="rounded-circle article-img" src="{{friend.0.profile.image.url}}" alt="image">
+				<div class="media-body">
+					<div class="inline float-left">
+						<p>
+							<a class="mr-2 h4" href="{% url 'profile-detail-view' pk=friend.0.pk %}">{{friend.0.username|truncatechars:50}}</a>
+						</p>
+						{% if friend.1 %}
+							<a href="{% url 'room-choice' friend.0.id %}">Send a Message</a>
+						{% endif %}
+					</div>
+
+					{% if friend.1 %}
+						<span class="inline float-right" style="color: rgb(0, 196, 0);">
+							<i class="fas fa-check-circle"></i>&nbsp;&nbsp;Friends
+						</span>
+					{% else %}
+						{% if friend.0 !=  request.user %}
+							<span class="inline float-right" style="color: rgb(216, 0, 0);">
+								<i class="fas fa-times-circle"></i>&nbsp;&nbsp;Not Friends
+							</span>
+						{% endif %}
+					{% endif %}
+					{% if friend.0 == request.user %}
+						<span class="inline float-right" style="color: rgb(0, 65, 245);">
+							<i class="fas fa-user-circle"></i>&nbsp;&nbsp;This is you
+						</span>
+					{% endif %}
+				
+				</div>
+			</div>
+			<hr>
+		{% endfor %}
+	</div>
+{% else %}  -->
+<!-- If no friends -->
+	<!-- <div class="d-flex flex-row flex-grow-1 justify-content-center align-items-center p-4">
+		<p>You are not friends with anyone.</p>
+	</div>
+{% endif %}
+</div> -->
